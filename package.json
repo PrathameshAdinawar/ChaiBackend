@@ -1,0 +1,17 @@
+{
+  "name": "chaibackend-series",
+  "version": "1.0.0",
+  "description": "a backend with chaiaurcode YT",
+  "keywords": [
+    "JavaScript",
+    "Backend",
+    "Chai"
+  ],
+  "license": "ISC",
+  "author": "Parthamesh Adinawar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
