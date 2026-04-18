@@ -1,0 +1,57 @@
+// require('dotenv').config({path:"./env"})
+
+import mongoose from "mongoose"
+import { DB_NAME } from "./constants.js"
+import connectDB from "./db/index.js"
+
+//            ************** Secound Approach **************
+
+
+
+connectDB()
+
+
+
+
+
+
+
+/* //                    ********** first approach ***********
+import express from "express"
+
+const app = express()
+
+   
+
+    // function connectDB(){}
+    // connectDB()
+
+    //better way to to write a function 
+    //IIFE (Immediately Invoked Function Expression) 
+    //Why use async because there can be a delay in DB (DB is always in anaother continent)
+    (async () => {
+        try {
+
+            await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+
+            // It is done when DB is connected but express is not able to talk to DB
+            app.on("error", (error) => {
+                console.log("ERRR: ", error);
+                throw error
+            })
+
+            //message to show port running ON
+            app.listen(process.env.PORT,()=>{
+
+                console.log(`App is listening onm port ${process.env.PORT}`);
+            
+            })
+
+        } catch (error) {
+
+            console.error('ERROR: ', error)
+            throw error
+
+        }
+    })()
+        */
