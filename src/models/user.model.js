@@ -1,6 +1,10 @@
 //.model is personal convention
 import mongoose, { Schema } from 'mongoose';
 
+// both are used to hash the credentials using cryptography encoding
+import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
+
 const userSchema = new Schema({
 
     userName: {
@@ -54,5 +58,50 @@ const userSchema = new Schema({
     }
 
 }, { timestamps: true });
+
+// .pre hook is middleware used to executed just before data is saved
+// it takes time to encrypt the credential so use async-await
+userSchema.pre('save',async function(next) {
+
+    if(this.isModified('pasword'))return next();// only hash the password if it has been modified (or is new)
+    this.pasword = bcrypt.hash(this.pasword, 10);
+    next(); // Call next() to proceed with the save operation
+
+})
+
+userSchema.methods.isPasswordCorrect = async function(password) {
+    return await bcrypt.compare(password, this.pasword);
+}
+
+userSchema.methods.generateAccessToken = function() {
+
+    return jwt.sign(
+        {
+            _id:this._id,
+            email:this.email,
+            userName:this.userName,
+            fullName:this.fullName,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn:process.env.ACCESS_TOKEN_EXPIRY
+        }
+    )
+
+}
+userSchema.methods.generateRefreshToken = function() {
+    return jwt.sign(
+        {
+            _id:this._id,
+            email:this.email,
+            userName:this.userName,
+            fullName:this.fullName,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn:process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
 
 export const User = mongoose.model('User', userSchema);
