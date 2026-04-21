@@ -1,0 +1,76 @@
+Http vs Https
+- To share text thats it
+- Not big difference Https protocals difference is encrypted only readable by server only
+- Also many things plays role in this Networking, OS, Crytography etc just to share text securely 
+
+
+In Http/Https may have seen things like URI,URL,URN
+-all same it is an address 
+-Uniform Resource Locator, Indentifier, Name
+
+
+
+What are Http Headers ?
+- Headers are meta data in key-value sent along with Request & Response
+- Can also make you own headers
+- When sending request it Also depends on from where the headers are requested it can be
+    1. Programetically request headers are diff
+    2. If have used any tool like Postman, RequestKit, etc requests headers are diff
+    3. from browser request headers are diff
+- Same from response headers can be Ok, 404 and so on 
+- Headers can be used in Caching, authentication, manage user state
+- Before 2012 X-prefix was used for at start of headers now its "deprecated"
+- Category of headers
+    1. request headers  -> from client 
+    2. response headers -> from server (standard codes 201,404 etc)
+    3. Representation error -> encoding/Compression (In modile apps data is in compressed state, Ingraph chart for Zaerodha like app network has limit)
+    4. Payload Headers -> data (DB)
+    5. Many more...
+
+Most Common Headers
+- Accpet: application/JSON format
+- User_Agent (Which OS , Which browser, Which browser engine, ...)
+- Authorization: Bearer_JWTtoken
+- Content_type (What are u sending Images, pdfs, ...)
+- Cookies ({values like unique codes, Time limitation, UserLogin ExpirationTime, ...})
+- Cache_Control 
+- many more...
+
+Production/Company level Headers
+- CORS
+    1. Access-Control-Allow-Origin
+    2. Access-Control-Allow-Credentials
+    3. Access-Control-Allow-Method
+-Security
+    1. Cross-Origin-Embeder-Policy
+    2. Cross-Origin-Opener-Policy
+    3. Content-Security-Policy
+    4. X-XSS-Protection
+
+
+
+Http Methods
+-Basic set of operators that can be used to interact with server
+    1. GET: retrieve a Resource
+    2. HEAD: No message body (response headers only) rarely used for cache control and so on
+    3. OPTIONS: What operation are available rarely used ( for ex: in /user is get,post,... are available ? )
+    4. TRACE: loopback test (is sometimes behind proxy to know the flow and know the time it takes Networking concepts like hooping)
+    5. DELETE: remove a Resource
+    6. PUT: replace a Resource
+    7. POST: interact with Resource (mostly add)
+    8. PATCH: Change the part of a Resource
+    9. Many more...
+
+Http status codes
+- 1XX -> Informational
+- 2XX -> Success
+- 3XX -> Redirection
+- 4XX -> Client error
+- 5XX -> Server error
+- For more details (https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+- standards can vary from Company to Company
+
+
+
+
+
