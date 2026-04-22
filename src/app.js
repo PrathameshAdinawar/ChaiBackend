@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 
+
 //used for middleware/configurations
 app.use(cors({
 
@@ -14,6 +15,8 @@ app.use(cors({
     credentials:true
 
 }))
+
+
 
 //    *** express configurations for parsing the data coming from frontend ***
 //why is it used ?
@@ -28,6 +31,18 @@ app.use(express.static("public"))
 
 //cookies which are kept in browser and only server can read and remove
 app.use(cookieParser())
+
+
+
+
+//routes import
+import userRouter from './routes/user.routes.js'
+
+
+
+//routes declaration
+app.use('/api/v1/users',userRouter) //http://localhost:8000/api/v1/users/ <- from here control is passed to user.routes.js
+
 
 
 //named export
