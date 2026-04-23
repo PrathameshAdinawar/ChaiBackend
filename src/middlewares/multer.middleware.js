@@ -4,6 +4,7 @@ const storage = multer.diskStorage({
 
     destination:function(req, file, cb){
         //file is not handled in express directly so we use ,multer/express fileupload is used
+        console.log("MULTER DESTINATION - File being saved");
         cb(null,'./public/temp')
 
     },
@@ -16,4 +17,12 @@ const storage = multer.diskStorage({
     }
 })
 
-export const upload = multer({storage,})
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        console.log("MULTER FILE FILTER - Received file:", file.fieldname, file.originalname);
+        cb(null, true);
+    }
+});
+
+export { upload }

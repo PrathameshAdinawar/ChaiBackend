@@ -61,12 +61,10 @@ const userSchema = new Schema({
 
 // .pre hook is middleware used to executed just before data is saved
 // it takes time to encrypt the credential so use async-await
-userSchema.pre('save',async function(next) {
+userSchema.pre("save", async function () {
+    if(!this.isModified("pasword")) return;
 
-    if(this.isModified('pasword'))return next();// only hash the password if it has been modified (or is new)
-    this.pasword = await bcrypt.hash(this.pasword, 10);
-    next(); // Call next() to proceed with the save operation
-
+    this.pasword = await bcrypt.hash(this.pasword, 10)
 })
 
 userSchema.methods.isPasswordCorrect = async function(password) {
