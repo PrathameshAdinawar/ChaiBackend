@@ -5,6 +5,29 @@ import {User} from "../models/User.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/Apiresponse.js";
 
+
+//Method to generate refresh and access token
+const generateAccessAndRefreshTokens = async(userId){
+    try{
+
+        const user = await User.findById(userId)
+        const accessToken = await user.generateAccessToken()
+        const refreshToken = await user.generateRefreshToken()
+
+        user.refreshToken = refreshToken
+        //Mogoose model kicks in here asking that password is required we just user "validateBeforeSave:false" (to not validate)
+        await user.save({validateBeforeSave: false})
+
+        
+
+    }catch(error){
+        throw new ApiError(500,'Something went wrong while generating refresh and access token')
+    }
+}
+
+
+
+
 //Kind of Higher order function that accepts a function
 const registerUser = asyncHandler( async (req,res)=>{
     // get user details from frontend/ postman
@@ -97,4 +120,54 @@ const registerUser = asyncHandler( async (req,res)=>{
 
 
 })
-export { registerUser }
+
+const loginUser = asyncHandler(async (req,res)=>{
+    // retrieve req body -> data
+    // username or email exists
+    // find the user to check if user exists
+    // password check
+    // access and refresh token
+    // send cookie
+
+
+    // retrieve req body -> data
+    const {email,username,password} = req.body
+
+
+
+    // username or email exists
+    if(!username || !email){
+        throw new ApiError(400,'username or email is required')
+    }
+
+    //first entry of the user in mongoDB if user is present is returned 
+    const user = await User.findOne({
+
+        //for optional searched we use $or
+        $or:[{username},{email}]
+    })
+
+
+
+    //find the user to check if user exists
+    if(!user){
+        throw new ApiError(404,'user does not exists');
+    }
+
+
+    // password check
+    const isPasswordValid = await user.isPasswordCorrect(password);
+
+    if(!isPasswordValid){
+        throw new ApiError(401,'Invalid user credentials');
+    }
+
+
+
+
+
+})
+export { 
+    registerUser,
+    loginUser
+ }
