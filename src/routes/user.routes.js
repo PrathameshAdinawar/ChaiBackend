@@ -29,4 +29,9 @@ router.route("/login").post(loginUser)
 //Secured Routes
 //first runs the "verifyJWT" from middlewares and when the next() is reached it runs the "logOutUser" from controllers
 router.route("/logout").post(verifyJWT, logOutUser)
+
+
+router.route("/refresh-token").post(refreshAccessToken)
+
+
 export default router;

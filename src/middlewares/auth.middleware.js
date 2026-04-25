@@ -1,7 +1,7 @@
-import { ApiError } from "../utils/ApiError";
-import { asyncHandler } from "../utils/asynchandler";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asynchandler.js";
 import jwt from 'jsonwebtoken'
-import { User } from "../models/User.model";
+import { User } from "../models/User.model.js";
 
 //next is important in middleware as it guides where to go can be back to main file or another middleware 
 // res is not getting used so we can put _

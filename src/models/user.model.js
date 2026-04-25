@@ -7,7 +7,7 @@ import bcrypt from "bcrypt"
 
 const userSchema = new Schema({
 
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true,
@@ -25,7 +25,7 @@ const userSchema = new Schema({
         trim: true,
     },
 
-    fullname: {
+    fullName: {
         type: String,
         required: true,
         trim: true,
@@ -48,7 +48,7 @@ const userSchema = new Schema({
         }
     ],
 
-    pasword:{
+    password:{
         type: String,
         required: [true,"Password is required"]
     },
@@ -62,13 +62,13 @@ const userSchema = new Schema({
 // .pre hook is middleware used to executed just before data is saved
 // it takes time to encrypt the credential so use async-await
 userSchema.pre("save", async function () {
-    if(!this.isModified("pasword")) return;
+    if(!this.isModified("password")) return;
 
-    this.pasword = await bcrypt.hash(this.pasword, 10)
+    this.password = await bcrypt.hash(this.password, 10)
 })
 
 userSchema.methods.isPasswordCorrect = async function(password) {
-    return await bcrypt.compare(password, this.pasword);
+    return await bcrypt.compare(password, this.password);
 }
 
 userSchema.methods.generateAccessToken = function() {
@@ -104,4 +104,4 @@ userSchema.methods.generateRefreshToken = function() {
     )
 }
 
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.models.User || mongoose.model('User', userSchema);
