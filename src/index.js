@@ -11,23 +11,23 @@ import { app } from "./app.js"
 
 
 connectDB()
-.then(()=>{
+    .then(() => {
 
-    //Used for listening/handling events like server errors, connections, and logging system activities.
-    app.on("error", (error) => {
-                console.log("ERRR: ", error);
-                throw error
-            })
+        //Used for listening/handling events like server errors, connections, and logging system activities.
+        app.on("error", (error) => {
+            console.log("ERRR: ", error);
+            throw error
+        })
 
-    //Used to start backend servers (APIs, web apps)
-    app.listen(process.env.PORT || 8000,()=>{
-        console.log(`Server is running at pot:${process.env.PORT}`)
-    });
-})
+        //Used to start backend servers (APIs, web apps)
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server is running at pot:${process.env.PORT}`)
+        });
+    })
 
-.catch((error) => {
-    console.log("Error in connecting to DB !!!!", error)
-})
+    .catch((error) => {
+        console.log("Error in connecting to DB !!!!", error)
+    })
 
 
 
