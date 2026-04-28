@@ -5,6 +5,7 @@ import { User } from "../models/User.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/Apiresponse.js";
 import jwt from 'jsonwebtoken';
+import mongoose from "mongoose";
 
 
 //Method to generate refresh and access token
@@ -219,8 +220,8 @@ const logOutUser = asyncHandler(async (req, res) => {
         req.user._id,
         {
             //mongodb operator takes objects where we can update fields
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1 //removes the field from document
             }
         },
         {
@@ -471,7 +472,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
             $lookup: {
                 from: 'subscription',
                 localField: '_id',
-                foreignField: 'channel'
+                foreignField: 'channel',
+                as:'subscribers'
             }
         },
         {

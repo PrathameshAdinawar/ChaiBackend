@@ -7,6 +7,7 @@ import {
     getWatchHistory,
     loginUser,
     logOutUser,
+    refreshAccessToken,
     registerUser,
     updateAccountDetails,
     updateUserAvatar,
